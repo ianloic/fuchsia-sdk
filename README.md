@@ -20,6 +20,9 @@ packages/gn/gen.py --modules=default,../../sdk/module
 
 Then do a build...
 
+The SDK build relies on the packages/gn/desc.py script, which hard-codes debug,
+so the build should be a debug build.
+
 ## Outputs
 
 The build produces the following outputs in an `sdk` directory under your output directory, for example
