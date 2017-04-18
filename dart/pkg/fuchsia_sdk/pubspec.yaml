@@ -1,0 +1,7 @@
+name: fuchsia_sdk
+dependencies:
+  args: any
+  barback: any
+  logging: any
+  path: any
+  yaml: any
