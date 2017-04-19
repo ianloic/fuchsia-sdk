@@ -27,6 +27,9 @@ fidls = [
   "//application/services",
   "//application/services:service_provider",
   "//apps/network/services",
+  "//apps/maxwell/services/context",
+  "//apps/maxwell/services/resolver",
+  "//apps/maxwell/services/suggestion",
 ]
 
 sdk_contents = [
