@@ -17,7 +17,10 @@ sdk_output_dir = "${root_out_dir}/sdk"
 group("sdk") {
   deps = [
     ":generate_dart_packages",
+    ":make_vars",
+    ":sdk_includes",
     ":sdk_library",
+    ":shell_vars"
   ]
 }
 
