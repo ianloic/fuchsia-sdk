@@ -12,17 +12,17 @@ import sys
 from common import *
 
 class Generator(object):
-  def __init__(self, fuchsia_root):
-    self._root = fuchsia_root
-    self._libraries = set()
+  def __init__(self, root_out_dir, src_root):
+    self._root_out_dir = root_out_dir
+    self._src_root = src_root
     # regex pattern of include dirs sorted from longest to shortest
-    self._include_dirs = '(?:' + '|'.join(sorted(gn_desc(
+    self._include_dirs = '(?:' + '|'.join(sorted(gn_desc(root_out_dir,
         '//sdk:sdk_library', 'include_dirs')['include_dirs'], None, len, True)
         ) + ')(.*)'
 
   def path(self, gn_path):
     """Turn a gn path into a real path"""
-    return os.path.normpath(self._root + gn_path)
+    return os.path.normpath(self._src_root + gn_path)
 
   def include_path(self, gn_path):
     """Turn a gn path into its include-relative equivalent."""
@@ -31,20 +31,21 @@ class Generator(object):
 
   def generate(self, targets, blacklist):
     blacklist.sort()
+    already_processed = set()
     while targets:
       target = targets.pop()
       library = normalize_target(target)
 
-      if library in self._libraries:
+      if library in already_processed:
         continue
 
-      self._libraries.add(library)
+      already_processed.add(library)
 
       blk_entry = bisect.bisect(blacklist, library)
       if (blk_entry > 0 and library.startswith(blacklist[blk_entry - 1])):
         continue
 
-      library_desc = gn_desc(library)
+      library_desc = gn_desc(self._root_out_dir, library)
 
       if 'sources' in library_desc:
         for file in library_desc['sources']:
@@ -54,16 +55,16 @@ class Generator(object):
       targets += library_desc['deps']
 
 if __name__ == '__main__':
-  fuchsia_root = None
+  src_root = None
   if len(sys.argv) < 4:
-    sys.stderr.write('%s <root> <output_dir> !exclude_prefix1 ... target1 ...\n' % sys.argv[0])
+    sys.stderr.write('%s <root_out_dir> <src_root> <output_dir> !exclude_prefix1 ... target1 ...\n' % sys.argv[0])
     sys.exit(1)
 
-  _, root, output_dir = sys.argv[:3]
+  _, root_out_dir, src_root, output_dir = sys.argv[:4]
   targets = []
   extra_headers = []
   blacklist = []
-  for arg in sys.argv[3:]:
+  for arg in sys.argv[4:]:
     if arg.startswith('!'):
       blacklist.append(arg[1:])
     elif arg.endswith('.h'):
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     else:
       targets.append(arg)
 
-  generator = Generator(root)
+  generator = Generator(root_out_dir, src_root)
 
   for file in itertools.chain(generator.generate(targets, blacklist), extra_headers):
     source = generator.path(file)
