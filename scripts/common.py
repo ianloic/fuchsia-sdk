@@ -8,12 +8,12 @@ def normalize_target(target):
     if ':' in target: return target
     return target + ':' + os.path.basename(target)
 
-def gn_desc(target, *what_to_show):
+def gn_desc(root_out_dir, target, *what_to_show):
     # gn desc may fail transiently for an unknown reason; retry loop
     for i in xrange(2):
         desc = subprocess.check_output([
             os.path.join(os.environ['FUCHSIA_DIR'], 'packages', 'gn',
-                         'desc.py'), '--format=json', target
+                         'gn.py'), 'desc', root_out_dir, '--format=json', target
         ] + list(what_to_show))
         try:
             output = json.loads(desc)

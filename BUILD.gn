@@ -60,6 +60,7 @@ action("sdk_includes") {
   output = "${sdk_output_dir}/include"
   script = "scripts/copy-includes.py"
   args = [
+           root_out_dir,
            rebase_path("//"),
            rebase_path(output),
            "!//third_party/",
@@ -77,6 +78,7 @@ action("make_vars") {
   script = "scripts/generate-vars.py"
   output = "${sdk_output_dir}/fuchsia.makevars"
   args = [
+    root_out_dir,
     rebase_path("//"),
     "//sdk:sdk_library",
     rebase_path(output),
@@ -91,6 +93,7 @@ action("shell_vars") {
   output = "${sdk_output_dir}/fuchsia.env"
   args = [
     "--format=sh",
+    root_out_dir,
     rebase_path("//"),
     "//sdk:sdk_library",
     rebase_path(output),
