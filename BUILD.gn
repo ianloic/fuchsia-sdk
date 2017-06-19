@@ -110,7 +110,7 @@ action("generate_dart_packages") {
     "//apps/modular/services/story:story_dart",
   ]
   script = "scripts/generate-dart-packages.py"
-  args = deps
+  args = [ root_out_dir ] + deps
   outputs = [
     "${sdk_output_dir}/dart-pkg/apps.modular.lib.app.dart/pubspec.yaml",
   ]

@@ -55,14 +55,15 @@ class DartPackage(object):
             os.path.join(os.path.dirname(self.package_source), 'pubspec.yaml'))
 
 # TODO(ianloic): canonicalize target names?
-targets = list(sys.argv[1:])
+root_out_dir = sys.argv[1]
+targets = list(sys.argv[2:])
 target_deps = {}
 
 dart_packages = []
 
 while len(targets):
     target = targets.pop()
-    desc = gn_desc(target)
+    desc = gn_desc(root_out_dir, target)
     deps = frozenset(desc['deps'])
     target_deps[target] = deps
     targets.extend(dep for dep in deps
