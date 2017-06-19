@@ -38,7 +38,6 @@ fidls = [
 sdk_contents = [
                  "//application/lib/app",
                  "//apps/mozart/lib/skia",
-                 "//apps/mozart/lib/view_associate_framework",
                  "//apps/mozart/lib/view_framework",
                  "//apps/mozart/lib/view_framework:view_provider",
                  "//lib/fidl/cpp/bindings",
