@@ -40,6 +40,7 @@ class Generator(object):
         continue
 
       already_processed.add(library)
+      print(library)
 
       blk_entry = bisect.bisect(blacklist, library)
       if (blk_entry > 0 and library.startswith(blacklist[blk_entry - 1])):
@@ -50,6 +51,7 @@ class Generator(object):
       if 'sources' in library_desc:
         for file in library_desc['sources']:
           if (file.endswith('.h')):
+            print("--> %s" % file)
             yield file
 
       targets += library_desc['deps']

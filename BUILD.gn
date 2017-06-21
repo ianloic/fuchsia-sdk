@@ -16,11 +16,11 @@ sdk_output_dir = "${root_out_dir}/sdk"
 
 group("sdk") {
   deps = [
-    ":generate_dart_packages",
-    ":make_vars",
+    # ":generate_dart_packages",
+    # ":make_vars",
     ":sdk_includes",
     ":sdk_library",
-    ":shell_vars"
+    # ":shell_vars"
   ]
 }
 
@@ -37,6 +37,7 @@ fidls = [
 
 sdk_contents = [
                  "//application/lib/app",
+                 "//application/lib/svc",
                  "//apps/mozart/lib/skia",
                  "//apps/mozart/lib/view_framework",
                  "//apps/mozart/lib/view_framework:view_provider",
