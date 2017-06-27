@@ -36,16 +36,15 @@ fidls = [
 ]
 
 sdk_contents = [
-                 "//application/lib/app",
-                 "//application/lib/svc",
-                 "//apps/mozart/lib/skia",
-                 "//apps/mozart/lib/view_framework",
-                 "//apps/mozart/lib/view_framework:view_provider",
-                 "//lib/fidl/cpp/bindings",
-                 "//lib/fidl/cpp/bindings:serialization",
-                 "//lib/mtl",
-                 "//lib/mtl/waiter",
-               ] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
+  "//application/lib/app",
+  "//application/lib/svc",
+  "//apps/mozart/lib/skia",
+  "//apps/mozart/lib/view_framework",
+  "//apps/mozart/lib/view_framework:view_provider",
+  "//lib/fidl/cpp/bindings",
+  "//lib/fidl/cpp/bindings:serialization",
+  "//lib/mtl",
+] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
 
 # A static library that links in all of the code required to build a fuchsia
 # application outside of the fuchsia tree.
