@@ -43,7 +43,8 @@ sdk_contents = [
   "//apps/mozart/lib/view_framework:view_provider",
   "//lib/fidl/cpp/bindings",
   "//lib/fidl/cpp/bindings:serialization",
-  "//lib/mtl",
+  "//lib/ftl:ftl_sources",
+  "//lib/mtl:mtl_sources",
 ] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
 
 # A static library that links in all of the code required to build a fuchsia
