@@ -15,7 +15,7 @@ jiri update
 
 Include the sdk in your build:
 ```
-packages/gn/gen.py --modules=default,../../sdk/module
+packages/gn/gen.py --modules=packages/gn/default,sdk/module
 ```
 
 Then do a build...

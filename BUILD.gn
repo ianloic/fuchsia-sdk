@@ -24,22 +24,21 @@ group("sdk") {
 # TODO(rosswang): scan sdk_contents and dependencies for fidls and add sync
 # variants for all
 fidls = [
-  "//application/services",
-  "//application/services:service_provider",
-  "//apps/network/services",
-  "//apps/maxwell/services/context",
-  "//apps/maxwell/services/resolver",
-  "//apps/maxwell/services/suggestion",
+  "//garnet/public/lib/app/fidl",
+  "//garnet/public/lib/media/fidl",
+  "//garnet/public/lib/network/fidl",
+  "//peridot/public/lib/context/fidl",
+  "//peridot/public/lib/resolver/fidl",
+  "//peridot/public/lib/suggestion/fidl",
 ]
 
 sdk_contents = [
-  "//application/lib/app",
-  "//application/lib/svc",
-  "//apps/media/lib/transport",
+  "//garnet/public/lib/app/cpp",
   "//garnet/public/lib/fidl/cpp/bindings",
   "//garnet/public/lib/fidl/cpp/bindings:serialization",
-  "//garnet/public/lib/ftl:ftl_sources",
-  "//garnet/public/lib/mtl:mtl_sources",
+  "//garnet/public/lib/fsl:fsl_sources",
+  "//garnet/public/lib/fxl:fxl_sources",
+  "//garnet/public/lib/media/transport",
   "//garnet/public/lib/ui/skia",
   "//garnet/public/lib/ui/view_framework",
   "//garnet/public/lib/ui/view_framework:view_provider",
@@ -62,7 +61,6 @@ action("sdk_includes") {
            rebase_path("//"),
            rebase_path(output),
            "!//third_party/",
-           "!//apps/tracing/",
            "!//garnet/public/lib/fonts/",
            "!//garnet/public/lib/ui/",
          ] + sdk_contents
@@ -103,9 +101,9 @@ action("shell_vars") {
 
 action("generate_dart_packages") {
   deps = [
-    "//application/lib/app/dart",
-    "//application/services:services_dart",
-    "//apps/modular/services/story:story_dart",
+    "//garnet/public/lib/app/dart",
+    "//garnet/public/lib/app/fidl:fidl_dart",
+    "//peridot/public/lib/story/fidl:fidl_dart",
   ]
   script = "scripts/generate-dart-packages.py"
   args = [ root_out_dir ] + deps

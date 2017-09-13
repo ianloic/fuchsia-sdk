@@ -12,9 +12,10 @@ def gn_desc(root_out_dir, target, *what_to_show):
     # gn desc may fail transiently for an unknown reason; retry loop
     for i in xrange(2):
         desc = subprocess.check_output([
-            os.path.join(os.environ['FUCHSIA_DIR'], 'packages', 'gn',
-                         'gn.py'), 'desc', root_out_dir, '--format=json', target
+            os.path.join(os.environ['FUCHSIA_DIR'], 'buildtools', 'gn'), 'desc',
+            root_out_dir, '--format=json', target
         ] + list(what_to_show))
+
         try:
             output = json.loads(desc)
             break
