@@ -16,11 +16,8 @@ sdk_output_dir = "${root_out_dir}/sdk"
 
 group("sdk") {
   deps = [
-    # ":generate_dart_packages",
-    # ":make_vars",
     ":sdk_includes",
     ":sdk_library",
-    # ":shell_vars"
   ]
 }
 
@@ -38,13 +35,14 @@ fidls = [
 sdk_contents = [
   "//application/lib/app",
   "//application/lib/svc",
-  "//apps/mozart/lib/skia",
-  "//apps/mozart/lib/view_framework",
-  "//apps/mozart/lib/view_framework:view_provider",
-  "//lib/fidl/cpp/bindings",
-  "//lib/fidl/cpp/bindings:serialization",
-  "//lib/ftl:ftl_sources",
-  "//lib/mtl:mtl_sources",
+  "//apps/media/lib/transport",
+  "//garnet/public/lib/fidl/cpp/bindings",
+  "//garnet/public/lib/fidl/cpp/bindings:serialization",
+  "//garnet/public/lib/ftl:ftl_sources",
+  "//garnet/public/lib/mtl:mtl_sources",
+  "//garnet/public/lib/ui/skia",
+  "//garnet/public/lib/ui/view_framework",
+  "//garnet/public/lib/ui/view_framework:view_provider",
 ] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
 
 # A static library that links in all of the code required to build a fuchsia
@@ -64,9 +62,9 @@ action("sdk_includes") {
            rebase_path("//"),
            rebase_path(output),
            "!//third_party/",
-           "!//apps/fonts/",
-           "!//apps/mozart/",
            "!//apps/tracing/",
+           "!//garnet/public/lib/fonts/",
+           "!//garnet/public/lib/ui/",
          ] + sdk_contents
   outputs = [
     output,  # TODO(rosswang): enumerate output files

@@ -15,10 +15,12 @@ class Generator(object):
   def __init__(self, root_out_dir, src_root):
     self._root_out_dir = root_out_dir
     self._src_root = src_root
+    include_dirs = gn_desc(root_out_dir, '//sdk:sdk_library', 'include_dirs')['include_dirs']
+    # disallow garnet/public include path obliteration; use -I compile options for these instead
+    # (include_dirs will include a '//' catch-all)
+    include_dirs = filter(lambda dir: re.match('.*/garnet/public/', dir) == None, include_dirs)
     # regex pattern of include dirs sorted from longest to shortest
-    self._include_dirs = '(?:' + '|'.join(sorted(gn_desc(root_out_dir,
-        '//sdk:sdk_library', 'include_dirs')['include_dirs'], None, len, True)
-        ) + ')(.*)'
+    self._include_dirs = '(?:' + '|'.join(sorted(include_dirs, None, len, True)) + ')(.*)'
 
   def path(self, gn_path):
     """Turn a gn path into a real path"""
