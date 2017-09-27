@@ -2,7 +2,6 @@
 # vim: softtabstop=2 ts=2:
 
 import bisect
-import json
 import itertools
 import os
 import re
@@ -15,12 +14,24 @@ class Generator(object):
   def __init__(self, root_out_dir, src_root):
     self._root_out_dir = root_out_dir
     self._src_root = src_root
-    include_dirs = gn_desc(root_out_dir, '//sdk:sdk_library', 'include_dirs')['include_dirs']
-    # disallow garnet/public include path obliteration; use -I compile options for these instead
+    include_dirs = gn_desc(root_out_dir, '//sdk:sdk_library',
+                           'include_dirs')['include_dirs']
+    # disallow garnet/public etc. include path obliteration since fidls use
+    # fuchsia-dir-relative include paths but handwritten code typically uses
+    # shorter lib/... paths; use -I compile options for these instead
     # (include_dirs will include a '//' catch-all)
-    include_dirs = filter(lambda dir: re.match('.*/garnet/public/', dir) == None, include_dirs)
+    include_flattening_blacklist = ('garnet/public', 'peridot/public')
+
+    include_flattening_blacklist = '|'.join(
+        ['.*/' + x + '/' for x in include_flattening_blacklist])
+
+    include_dirs = [
+        inc_dir for inc_dir in include_dirs
+        if re.match(include_flattening_blacklist, inc_dir) is None
+    ]
     # regex pattern of include dirs sorted from longest to shortest
-    self._include_dirs = '(?:' + '|'.join(sorted(include_dirs, None, len, True)) + ')(.*)'
+    self._include_dirs = '(?:' + '|'.join(
+        sorted(include_dirs, None, len, True)) + ')(.*)'
 
   def path(self, gn_path):
     """Turn a gn path into a real path"""
@@ -42,10 +53,10 @@ class Generator(object):
         continue
 
       already_processed.add(library)
-      print(library)
+      print library
 
       blk_entry = bisect.bisect(blacklist, library)
-      if (blk_entry > 0 and library.startswith(blacklist[blk_entry - 1])):
+      if blk_entry > 0 and library.startswith(blacklist[blk_entry - 1]):
         continue
 
       library_desc = gn_desc(self._root_out_dir, library)
@@ -53,7 +64,7 @@ class Generator(object):
       if 'sources' in library_desc:
         for file in library_desc['sources']:
           if (file.endswith('.h')):
-            print("--> %s" % file)
+            print "--> %s" % file
             yield file
 
       targets += library_desc['deps']
