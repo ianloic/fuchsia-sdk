@@ -42,6 +42,7 @@ sdk_contents = [
   "//garnet/public/lib/ui/skia",
   "//garnet/public/lib/ui/view_framework",
   "//garnet/public/lib/ui/view_framework:view_provider",
+  "//peridot/public/lib/context/cpp:context_metadata_builder",
 ] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
 
 # A static library that links in all of the code required to build a fuchsia
