@@ -102,7 +102,7 @@ action("shell_vars") {
 
 action("generate_dart_packages") {
   deps = [
-    "//garnet/public/lib/app/dart",
+    "//topaz/public/lib/app/dart",
     "//garnet/public/lib/app/fidl:fidl_dart",
     "//peridot/public/lib/story/fidl:fidl_dart",
   ]
