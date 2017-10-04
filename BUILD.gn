@@ -30,6 +30,7 @@ fidls = [
   "//peridot/public/lib/context/fidl",
   "//peridot/public/lib/resolver/fidl",
   "//peridot/public/lib/suggestion/fidl",
+  "//peridot/public/lib/user_intelligence/fidl",
 ]
 
 sdk_contents = [
