@@ -21,30 +21,25 @@ group("sdk") {
   ]
 }
 
-# TODO(rosswang): scan sdk_contents and dependencies for fidls and add sync
-# variants for all
-fidls = [
+sdk_contents = [
+  "//garnet/public/lib/app/cpp",
   "//garnet/public/lib/app/fidl",
+  "//garnet/public/lib/fidl/cpp/bindings",
+  "//garnet/public/lib/fidl/cpp/bindings:serialization",
+  "//garnet/public/lib/fsl:fsl_sources",
+  "//garnet/public/lib/fxl:fxl_sources",
   "//garnet/public/lib/media/fidl",
+  "//garnet/public/lib/media/transport",
   "//garnet/public/lib/network/fidl",
+  "//garnet/public/lib/ui/skia",
+  "//garnet/public/lib/ui/view_framework",
+  "//garnet/public/lib/ui/view_framework:view_provider",
+  "//peridot/public/lib/context/cpp:context_metadata_builder",
   "//peridot/public/lib/context/fidl",
   "//peridot/public/lib/resolver/fidl",
   "//peridot/public/lib/suggestion/fidl",
   "//peridot/public/lib/user_intelligence/fidl",
 ]
-
-sdk_contents = [
-  "//garnet/public/lib/app/cpp",
-  "//garnet/public/lib/fidl/cpp/bindings",
-  "//garnet/public/lib/fidl/cpp/bindings:serialization",
-  "//garnet/public/lib/fsl:fsl_sources",
-  "//garnet/public/lib/fxl:fxl_sources",
-  "//garnet/public/lib/media/transport",
-  "//garnet/public/lib/ui/skia",
-  "//garnet/public/lib/ui/view_framework",
-  "//garnet/public/lib/ui/view_framework:view_provider",
-  "//peridot/public/lib/context/cpp:context_metadata_builder",
-] + exec_script("scripts/fidl-sync.py", fidls, "list lines")
 
 # A static library that links in all of the code required to build a fuchsia
 # application outside of the fuchsia tree.
