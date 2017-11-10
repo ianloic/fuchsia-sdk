@@ -34,6 +34,7 @@ sdk_contents = [
   "//garnet/public/lib/ui/skia",
   "//garnet/public/lib/ui/view_framework",
   "//garnet/public/lib/ui/view_framework:view_provider",
+  "//peridot/public/lib/app_driver/cpp",
   "//peridot/public/lib/context/cpp:context_metadata_builder",
   "//peridot/public/lib/context/fidl",
   "//peridot/public/lib/resolver/fidl",
