@@ -96,16 +96,3 @@ action("shell_vars") {
     output,
   ]
 }
-
-action("generate_dart_packages") {
-  deps = [
-    "//topaz/public/lib/app/dart",
-    "//garnet/public/lib/app/fidl:fidl_dart",
-    "//peridot/public/lib/story/fidl:fidl_dart",
-  ]
-  script = "scripts/generate-dart-packages.py"
-  args = [ root_out_dir ] + deps
-  outputs = [
-    "${sdk_output_dir}/dart-pkg/apps.modular.lib.app.dart/pubspec.yaml",
-  ]
-}
